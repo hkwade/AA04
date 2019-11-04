@@ -1,6 +1,6 @@
 # AA04
 ## Young Adult Political Involvement
-### An analysis of young adult voter turnout throughout history
+### An Analysis of Young Adult Voter Turnout Throughout History
 Raveena Rao\
 Precious Stowers\
 Hunter Wade\
