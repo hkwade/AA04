@@ -57,7 +57,12 @@ page_four <- tabPanel(
 
 page_five <- tabPanel(
     "About Us",
-    titlePanel("About Us")
+    titlePanel("About Us"),
+    h3("Raveena Rao: Intended Informatics"),
+    br(),
+    h3("Precious Stowers: Intended Informatics"),
+    br(),
+    h3("Hunter Wade: Intended Applied Computational & Mathematical Sciences")
     
 )
 
