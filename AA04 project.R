@@ -38,16 +38,31 @@ best_frame <- data_frame[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 199:20
   
 # pulling data to create new sub data frames for visulizations ------------
   
-# All population who voted -----------
-  
+# --------All population who voted -----------
+
 all_voted <- best_frame %>%
   select(everything()) %>%
   slice(2:29)
 View(all_voted)
 
-# All population who registered ---------
+# ------All population who registered ---------
+
 all_registered <- best_frame %>%
   select(everything()) %>%
   slice(31:58)
 View(all_registered)
+
+# --- 18-24 who voted--------
+
+young_voted <- best_frame %>%
+  select(everything()) %>%
+  slice(61:88)
+View(young_voted)
+
+#-----18-24 who registered --------
+
+young_registered <- best_frame %>%
+  select(everything()) %>%
+  slice(91:118)
+View(young_registered) 
   
