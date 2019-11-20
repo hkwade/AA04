@@ -42,7 +42,8 @@ View(data_one)
 data_two <- setNames(new_two_df, c("state"))
 
 
-# deleting uneeded rows
+# deleting uneeded rows ------------
+
 first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 199:201),]
   View(first_best_frame)
 
@@ -60,7 +61,7 @@ View(final_frame)                                      # all of the collumns sti
   # this creates easier columns/rows to filter for viz and easier to 
   # left/right/full join
   
-# --------All population who voted -----------
+# --------All population who voted ----------- all these should work---
 
 all_voted <-first_best_frame %>%
   select(everything()) %>%
@@ -71,63 +72,72 @@ View(all_voted)
 
 all_registered <-first_best_frame %>%
   select(everything()) %>%
-  slice(31:58)
+  slice(31:58) %>%
+  setNames(c("year","all registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(all_registered)
 
 # --- 18-24 who voted--------
 
 young_voted <-first_best_frame %>%
   select(everything()) %>%
-  slice(61:88)
+  slice(61:88) %>%
+  setNames(c("year"," 18-24 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(young_voted)
 
 #-----18-24 who registered --------
 
 young_registered <-first_best_frame %>%
   select(everything()) %>%
-  slice(91:118)
+  slice(91:118) %>%
+  setNames(c("year","18-24 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(young_registered) 
 
 #-----25-44 who voted --------
 
 middle_voted <-first_best_frame%>%
   select(everything()) %>%
-  slice(121:148)
+  slice(121:148) %>%
+  setNames(c("year","24-44 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(middle_voted)
 
 #-----25-44 who registered ---------
 
 middle_registered <- first_best_frame %>%
   select(everything()) %>%
-  slice(151:178)
+  slice(151:178) %>%
+  setNames(c("year","24-44 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(middle_registered)
 
 #-----45-64 who voted --------
 
 older_voted <- first_best_frame %>%
   select(everything()) %>%
-  slice(181:208)
+  slice(181:208) %>%
+  setNames(c("year","45-64 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(older_voted)
 
 #-----45-64 who registered ---------
 
 older_registered <- first_best_frame %>%
   select(everything()) %>%
-  slice(214:241)
+  slice(214:241) %>%
+  setNames(c("year","45-64 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(older_registered)
 
 #-----65 and older who voted -----
 
 oldest_voted <- first_best_frame %>%
   select(everything()) %>%
-  slice(247:274)
+  slice(247:274) %>%
+  setNames(c("year","65 and older \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(oldest_voted)
 
 #-----45-64 who registered ---------
 
 oldest_registered <- first_best_frame %>%
   select(everything()) %>%
-  slice(280:306)
+  slice(280:306) %>%
+  setNames(c("year","65 and older \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
 View(oldest_registered)
 
   
