@@ -1,12 +1,13 @@
 # Data Visualizations
 
 library(ggplot2)
+library(leaflet)
+library(mapview)
+library(ggplot2)
+library(plotly)
+source("AA04 project.R")
 
-df_three <- read.csv("Indivisual_state_data.csv",
-                     header = TRUE,
-                     stringsAsFactors = FALSE
-)
-   
+
 new_df_three <- df_three %>%
   filter(State == "United States") %>%
   select(X, State, Turnout.Rates) %>%
@@ -20,3 +21,7 @@ line_graph <- ggplot(data = new_df_three,
   geom_point() +
   ggtitle("Average Turnout Rates Per Year in America") +
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
+
+
+washington_bar_graph <- ggplot(wa_state_df) + 
+  geom_col(mapping = aes(x = legislative_dist, y = eighteen_to_twenty_four))
