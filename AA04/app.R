@@ -8,12 +8,6 @@ library(plotly)
 source("AA04 project.R")
 
 
-new_df_three <- df_three %>%
-  filter(State == "United States") %>%
-  select(X, State, Turnout.Rates) %>%
-  setNames(c("Year", "Location", "TurnoutRates")) %>% 
-  slice(1:9)
-View(new_df_three)
 
 line_graph <- ggplot(data = new_df_three, 
                      aes(x = Year, y = TurnoutRates, group = 1)) +

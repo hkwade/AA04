@@ -46,7 +46,7 @@ wa_state <- setNames(df_three, c("legislative_dist", "eighteen_to_twenty_four",
 View(wa_state)
 
 
-# deleting uneeded rows from data frames ------------
+# -----deleting uneeded rows from data frames ------------
 
 first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 199:201),]
   View(first_best_frame)
@@ -54,6 +54,16 @@ first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 19
 wa_state_df <- wa_state[-c(1:2, 52),]
   View(wa_state_df)
 
+#----filtering "df_two" for line graph-----
+  
+new_df_three <- df_three %>%
+    filter(State == "United States") %>%
+    select(X, State, Turnout.Rates) %>%
+    setNames(c("Year", "Location", "TurnoutRates")) %>%
+    slice(1:9)
+  View(new_df_three)
+  
+#----------------------------
 
 # pulling data frame from the first data frame (df) to 
 # create new sub data frames for visulizations,
