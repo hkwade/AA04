@@ -20,7 +20,20 @@ df_two <- read.csv("more_data.csv",
                    stringsAsFactors = FALSE
 )
 
+df_three <- read.csv("Indivisual_state_data.csv",
+                     header = TRUE,
+                     stringsAsFactors = FALSE
+)
+View(df_three)
+
+df_four <- read.csv("Washington_State.csv",
+                     header = TRUE,
+                     stringsAsFactors = FALSE
+)
 # deleting NA and unneeded columns -------------
+
+wa_state <- df_four %>%
+  setNames(df_four, c("Legislative District", "17-24", "25-34","45-54","55-64","65 and over", "uknown", ""))
 
 new_df <- df %>%
   select(-X.3:-X.12, -X.15:-X.18, -X.13:-X.14)
