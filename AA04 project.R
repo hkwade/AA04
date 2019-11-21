@@ -15,35 +15,22 @@ df <- read.csv("Voting_data.csv",
                stringsAsFactors = FALSE
 )
 
-df_two <- read.csv("more_data.csv",
-                   header = TRUE, 
-                   stringsAsFactors = FALSE
-)
 
-df_three <- read.csv("Indivisual_state_data.csv",
+df_two <- read.csv("Indivisual_state_data.csv",
                      header = TRUE,
                      stringsAsFactors = FALSE
 )
-View(df_three)
 
-df_four <- read.csv("Washington_State.csv",
+
+df_three <- read.csv("Washington_State.csv",
                      header = TRUE,
                      stringsAsFactors = FALSE
-)
-# deleting NA and unneeded columns -------------
-
-wa_state <- df_four %>%
-  setNames(df_four, c("Legislative District", "17-24", "25-34","45-54","55-64","65 and over", "uknown", ""))
+)   
+# deleting unneeded columns from data-------------
 
 new_df <- df %>%
   select(-X.3:-X.12, -X.15:-X.18, -X.13:-X.14)
 View(new_df)
-
-
-new_two_df <- df_two %>%
-  select(-X.14:-X.56)
-View(new_two_df)
-
 
 # changed column names - easier readability --------------
 
@@ -52,27 +39,26 @@ data_one <- setNames(new_df, c("Year","Total votes (all ages)  \n - by thousands
                                   "citizen population"))
 View(data_one)
   
-data_two <- setNames(new_two_df, c("state"))
+wa_state <- setNames(df_three, c("legislative_dist", "eighteen_to_twenty_four",
+                                 "twentyfive_to_thirty_four","thirtyfive_to_fourty_four", 
+                                 "fourtyfive_to_fifty_four","fiftyfive_to_sixty_four",
+                                 "sixtyfive_to_and over", "uknown", "total_votes"))
+View(wa_state)
 
 
-# deleting uneeded rows ------------
+# deleting uneeded rows from data frames ------------
 
 first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 199:201),]
   View(first_best_frame)
 
-second_best_frame <- data_two[-c(1),]
+wa_state_df <- wa_state[-c(1:2, 52),]
+  View(wa_state_df)
 
-#joining together for final frame
 
-View(second_best_frame) # This is where I stopped
-
-final_frame <- first_best_frame %>%
-  left_join(second_best_frame, by = state) # this function does not work, because I need to name 
-View(final_frame)                                      # all of the collumns still
-  
-# pulling data to create new sub data frames for visulizations ------------
-  # this creates easier columns/rows to filter for viz and easier to 
-  # left/right/full join
+# pulling data frame from the first data frame (df) to 
+# create new sub data frames for visulizations,
+# this creates easier columns/rows to filter for viz and easier to 
+# left/right/full join
   
 # --------All population who voted ----------- all these should work---
 
