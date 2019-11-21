@@ -2,7 +2,7 @@
 
 # data frame work
 
-setwd("~/Desktop/AA04")
+setwd("~/Desktop/AA04/AA04")
 library(dplyr)
 library(leaflet)
 library(ggplot2)

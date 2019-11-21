@@ -8,19 +8,27 @@
 #
 
 library(shiny)
-
+source('app.R')
+source('ui.R')
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-    output$distPlot <- renderPlot({
+    output$line_graph <- renderPlot({
 
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
-
+        # generate line graph
+        ggplot(data = new_df_three, 
+                             aes(x = input$obs, y = TurnoutRates, group = 1)) +
+            geom_line(color = "BLACK") +
+            geom_point() +
+            ggtitle("Average Turnout Rates Per Year in America") +
+            theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
+            geom_vline(xintercept = input$obs) 
     })
-
+    output$washington_bar_graph <- renderPlot({
+        
+        #generate bar graph
+        ggplot(wa_state_df) + 
+            geom_col(mapping = aes(x = legislative_dist, y = eighteen_to_twenty_four))
+    })
+    
 })

@@ -33,9 +33,9 @@ page_viz1 <- tabPanel(
       sliderInput("obs", "Range of Years:",  
               min = 1998, max = 2014, value = 2),
       ),
-    mainPanel(
+  main_content <-  mainPanel(
        h3("Line Graph"),
-       p("line_graph")
+       plotOutput(outputId = "line_graph"),
       )
     )
  ) 
@@ -58,7 +58,8 @@ page_viz2 <- tabPanel(
         checkboxInput('oldest', '65 and older')
       ),
     mainPanel(
-      h3("Bar Graph")
+      h3("Bar Graph"),
+      plotOutput(outputId = "washington_bar_graph"),
     )
     )
 
