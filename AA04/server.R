@@ -16,8 +16,8 @@ shinyServer(function(input, output) {
     output$line_graph <- renderPlot({
 
         # generate line graph
-        ggplot(data = new_df_three, 
-                             aes(x = input$obs, y = TurnoutRates, group = 1)) +
+        ggplot(data = new_df_two, 
+                             aes(x = input$obs, y = Turnout.Rates, group = 1)) +
             geom_line(color = "BLACK") +
             geom_point() +
             ggtitle("Average Turnout Rates Per Year in America") +

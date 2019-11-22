@@ -29,6 +29,7 @@ df_three <- read.csv("Washington_State.csv",
 ) 
 
 
+
 # deleting unneeded columns from data-------------
 
 new_df <- df %>%
@@ -57,7 +58,11 @@ first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 19
 wa_state_df <- wa_state[-c(1:2, 52),]
 
 
-#----filtering "df_two" for line graph-----
+new_df_two <- df_two %>%
+  filter(State == "United States") %>%
+  select(X, State, Turnout.Rates) %>%
+  slice(1:9)
+View(new_df_two)
 
 
 
@@ -148,8 +153,8 @@ oldest_registered <- first_best_frame %>%
 
 
 # --------- visulizations ---------
-line_graph <- ggplot(data = new_df_three, 
-                     aes(x = Year, y = TurnoutRates, group = 1)) +
+line_graph <- ggplot(data = new_df_two, 
+                     aes(x = X, y = Turnout.Rates, group = 1)) +
   geom_line(color = "BLACK") +
   geom_point() +
   ggtitle("Average Turnout Rates Per Year in America") +
