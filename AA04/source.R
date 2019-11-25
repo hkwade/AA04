@@ -2,7 +2,7 @@
 
 # data frame work
 
-setwd("~/Desktop/AA04/AA04")
+# setwd("~/Desktop/AA04/AA04")
 library(dplyr)
 library(leaflet)
 library(ggplot2)
@@ -16,7 +16,7 @@ df <- read.csv("Voting_data.csv",
 )
 
 
-df_two <- read.csv("Indivisual_state_data.csv",
+df_two <- read.csv("indivisual_state_data.csv",
                    header = TRUE,
                    stringsAsFactors = FALSE
 )
@@ -62,7 +62,6 @@ new_df_two <- df_two %>%
   filter(State == "United States") %>%
   select(X, State, Turnout.Rates) %>%
   slice(1:9)
-View(new_df_two)
 
 
 

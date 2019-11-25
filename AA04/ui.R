@@ -9,7 +9,8 @@
 
 
 library(shiny)
-source("app.R")
+source("source.R")
+
 # Define UI for application that draws a histogram
 page_one <- tabPanel(
     "Background",
