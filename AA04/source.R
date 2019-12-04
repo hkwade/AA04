@@ -8,6 +8,10 @@ library(leaflet)
 library(ggplot2)
 library(tidyr)
 library(tibble)
+library(plotly)
+library(httr)
+library(jsonlite)
+library(bitops)
 #reading in CSV data -------------
 
 df_two <- read.csv("indivisual_state_data.csv",

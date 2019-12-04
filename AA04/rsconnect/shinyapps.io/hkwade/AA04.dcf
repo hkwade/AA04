@@ -1,0 +1,12 @@
+name: AA04
+title: AA04
+username:
+account: hkwade
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1505192
+bundleId: 2639308
+url: https://hkwade.shinyapps.io/AA04/
+when: 1575444483.67627
+asMultiple: FALSE
+asStatic: FALSE
