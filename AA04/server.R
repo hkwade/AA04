@@ -8,27 +8,44 @@
 #
 
 library(shiny)
-source('source.R')
+source("source.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
 
-    output$line_graph <- renderPlot({
+    output$bargraph <- renderPlot({
 
         # generate line graph
-        ggplot(data = new_df_two, 
-                             aes(x = input$obs, y = Turnout.Rates, group = 1)) +
-            geom_line(color = "BLACK") +
-            geom_point() +
-            ggtitle("Average Turnout Rates Per Year in America") +
+        ggplot(the_df(input$selects)) +
+            geom_col(aes(x = State, y = Turnout.Rates)) +
             theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
-            geom_vline(xintercept = input$obs) 
+            labs(
+                title = "Average Turnout Rates Per Year in America",
+                x = "State",
+                y = "Turnout Rates"
+            )
+
     })
-    output$washington_bar_graph <- renderPlot({
-        
+    output$barchart <- renderPlotly({
+        input$wa_state_df
+
         #generate bar graph
-        ggplot(wa_state_df) + 
-            geom_col(mapping = aes(x = legislative_dist, y = eighteen_to_twenty_four))
+        plot_ly(wa_state_df, x = wa_state_df$legislative_dist,
+                y = wa_state_df[, input$age], type = "bar",
+                marker = list(color = "rgb(158,202)",
+                              line = list(color = "rgb(8,48)",
+                                          width = 1.5))) %>%
+            layout(title = "Votes per Legislative District",
+                   xaxis = list(title = "Legislative District"),
+                   yaxis = list(title = "Number of Votes"))
     })
-    
+
+    output$pie_chart <- renderPlot({
+
+       pie(as.numeric(final_df[, input$district]),
+           label = row.names(final_df)) +
+            title("Proportion of Voters by Age")
+
+    })
+
 })

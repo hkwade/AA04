@@ -2,19 +2,13 @@
 
 # data frame work
 
-# setwd("~/Desktop/AA04/AA04")
+
 library(dplyr)
 library(leaflet)
 library(ggplot2)
 library(tidyr)
-
+library(tibble)
 #reading in CSV data -------------
-
-df <- read.csv("Voting_data.csv",
-               header = TRUE,
-               stringsAsFactors = FALSE
-)
-
 
 df_two <- read.csv("indivisual_state_data.csv",
                    header = TRUE,
@@ -22,143 +16,71 @@ df_two <- read.csv("indivisual_state_data.csv",
 )
 
 
-
 df_three <- read.csv("Washington_State.csv",
                      header = TRUE,
                      stringsAsFactors = FALSE
-) 
+)
+
+wa_state <- setNames(df_three, c("legislative_dist", "18-24", "25-34", "35-44",
+                                 "45-54", "55-64",
+                                 "65+", "unknown", "total_votes"))
 
 
-
-# deleting unneeded columns from data-------------
-
-new_df <- df %>%
-  select(-X.3:-X.12, -X.15:-X.18, -X.13:-X.14)
+wa_state_df <- wa_state[-c(1:2, 52), ]
 
 
-# changed column names - easier readability --------------
+wa_state_df[, 2] <- as.numeric(gsub(",", "", wa_state_df[, 2]))
+wa_state_df[, 3] <- as.numeric(gsub(",", "", wa_state_df[, 3]))
+wa_state_df[, 4] <- as.numeric(gsub(",", "", wa_state_df[, 4]))
+wa_state_df[, 5] <- as.numeric(gsub(",", "", wa_state_df[, 5]))
+wa_state_df[, 6] <- as.numeric(gsub(",", "", wa_state_df[, 6]))
+wa_state_df[, 7] <- as.numeric(gsub(",", "", wa_state_df[, 7]))
+wa_state_df[, 9] <- as.numeric(gsub(",", "", wa_state_df[, 9]))
 
-data_one <- setNames(new_df, c("Year","Total votes (all ages)  \n - by thousands",
-                               "total population (by percent)",
-                               "citizen population"))
-
-
-wa_state <- setNames(df_three, c("legislative_dist", "eighteen_to_twenty_four",
-                                 "twentyfive_to_thirty_four","thirtyfive_to_fourty_four", 
-                                 "fourtyfive_to_fifty_four","fiftyfive_to_sixty_four",
-                                 "sixtyfive_to_and over", "uknown", "total_votes"))
-
-
-
-# -----deleting uneeded rows from data frames ------------
-
-first_best_frame <- data_one[-c(1:5, 35:37, 67:69, 100:102, 133:135, 166:168, 199:201),]
-
-
-wa_state_df <- wa_state[-c(1:2, 52),]
-
+test <- wa_state_df %>%
+  arrange(desc(legislative_dist))
 
 new_df_two <- df_two %>%
-  filter(State == "United States") %>%
-  select(X, State, Turnout.Rates) %>%
-  slice(1:9)
+  group_by(X) %>%
+  select(X, State, Turnout.Rates)
+
+new_df_two <- new_df_two[-1, ]
+colnames(new_df_two)[1] <- "time"
+
+the_df <- function(year) {
+  time <- NULL
+  new <- new_df_two %>% filter(time == year)
+  return(new)
+}
 
 
 
 #----------------------------
 
-# pulling data frame from the first data frame (df) to 
+# pulling data frame from the first data frame (df) to
 # create new sub data frames for visulizations,
-# this creates easier columns/rows to filter for viz and easier to 
+# this creates easier columns/rows to filter for viz and easier to
 # left/right/full join
 
 # --------All population who voted ----------- all these should work---
 
-all_voted <-first_best_frame %>%
-  select(everything()) %>%
-  slice(2:29)
 
+# -------- DF3 Sorting for Pie Chart -----------
 
-# ------All population who registered ---------
-
-all_registered <-first_best_frame %>%
-  select(everything()) %>%
-  slice(31:58) %>%
-  setNames(c("year","all registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-# --- 18-24 who voted--------
-
-young_voted <-first_best_frame %>%
-  select(everything()) %>%
-  slice(61:88) %>%
-  setNames(c("year"," 18-24 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----18-24 who registered --------
-
-young_registered <-first_best_frame %>%
-  select(everything()) %>%
-  slice(91:118) %>%
-  setNames(c("year","18-24 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----25-44 who voted --------
-
-middle_voted <-first_best_frame%>%
-  select(everything()) %>%
-  slice(121:148) %>%
-  setNames(c("year","24-44 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----25-44 who registered ---------
-
-middle_registered <- first_best_frame %>%
-  select(everything()) %>%
-  slice(151:178) %>%
-  setNames(c("year","24-44 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----45-64 who voted --------
-
-older_voted <- first_best_frame %>%
-  select(everything()) %>%
-  slice(181:208) %>%
-  setNames(c("year","45-64 \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----45-64 who registered ---------
-
-older_registered <- first_best_frame %>%
-  select(everything()) %>%
-  slice(214:241) %>%
-  setNames(c("year","45-64 \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----65 and older who voted -----
-
-oldest_voted <- first_best_frame %>%
-  select(everything()) %>%
-  slice(247:274) %>%
-  setNames(c("year","65 and older \n voted", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-#-----45-64 who registered ---------
-
-oldest_registered <- first_best_frame %>%
-  select(everything()) %>%
-  slice(280:306) %>%
-  setNames(c("year","65 and older \n registered", "total pop \n by percent", "citizen pop \n (by thousands)"))
-
-
-# --------- visulizations ---------
-line_graph <- ggplot(data = new_df_two, 
-                     aes(x = X, y = Turnout.Rates, group = 1)) +
-  geom_line(color = "BLACK") +
-  geom_point() +
-  ggtitle("Average Turnout Rates Per Year in America") +
-  theme(axis.text.x = element_text(angle = 60, hjust = 1))
-
-
-washington_bar_graph <- ggplot(wa_state_df) + 
-  geom_col(mapping = aes(x = legislative_dist, y = eighteen_to_twenty_four))
+remove_rows <- df_three[-c(1, 2), ]
+remove_column <- remove_rows[, -8]
+names(remove_column) <- c("Legislative District", "18-24",
+                          "25-34", "35-44", "45-54", "55-64",
+                          "65 and Older", "Total")
+df <- remove_column
+df[, 2] <- as.numeric(gsub(",", "", df[, 2]))
+df[, 3] <- as.numeric(gsub(",", "", df[, 3]))
+df[, 4] <- as.numeric(gsub(",", "", df[, 4]))
+df[, 5] <- as.numeric(gsub(",", "", df[, 5]))
+df[, 6] <- as.numeric(gsub(",", "", df[, 6]))
+df[, 7] <- gsub(",", "", df[, 7])
+final_df <- data.frame(t(df[-1]))
+colnames(final_df) <- c(1:49)
+colnames(final_df)[50] <- "Total"
+final_df <- final_df[-7, ]
+final_df <- final_df[, -50]
