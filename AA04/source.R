@@ -12,7 +12,8 @@ library(plotly)
 library(httr)
 library(jsonlite)
 library(bitops)
-#reading in CSV data -------------
+
+#reading in CSV data ---------------------------------------------------------
 
 df_two <- read.csv("indivisual_state_data.csv",
                    header = TRUE,
@@ -24,25 +25,8 @@ df_three <- read.csv("Washington_State.csv",
                      header = TRUE,
                      stringsAsFactors = FALSE
 )
-
-wa_state <- setNames(df_three, c("legislative_dist", "18-24", "25-34", "35-44",
-                                 "45-54", "55-64",
-                                 "65+", "unknown", "total_votes"))
-
-
-wa_state_df <- wa_state[-c(1:2, 52), ]
-
-
-wa_state_df[, 2] <- as.numeric(gsub(",", "", wa_state_df[, 2]))
-wa_state_df[, 3] <- as.numeric(gsub(",", "", wa_state_df[, 3]))
-wa_state_df[, 4] <- as.numeric(gsub(",", "", wa_state_df[, 4]))
-wa_state_df[, 5] <- as.numeric(gsub(",", "", wa_state_df[, 5]))
-wa_state_df[, 6] <- as.numeric(gsub(",", "", wa_state_df[, 6]))
-wa_state_df[, 7] <- as.numeric(gsub(",", "", wa_state_df[, 7]))
-wa_state_df[, 9] <- as.numeric(gsub(",", "", wa_state_df[, 9]))
-
-test <- wa_state_df %>%
-  arrange(desc(legislative_dist))
+# Average turnout rates per year in America----------------------------------
+# constructing the bar graph for total voter turnout rates for the US
 
 new_df_two <- df_two %>%
   group_by(X) %>%
@@ -57,19 +41,30 @@ the_df <- function(year) {
   return(new)
 }
 
+# Votes per legislative district-------------------------------------------
+# constructing a graph that lays out the total amount of votes in a Washington
+# district for a certain age group
 
+wa_state <- setNames(df_three, c("legislative_dist", "18-24", "25-34", "35-44",
+                                 "45-54", "55-64",
+                                 "65+", "unknown", "total_votes"))
 
-#----------------------------
+wa_state_df <- wa_state[-c(1:2, 52), ]
 
-# pulling data frame from the first data frame (df) to
-# create new sub data frames for visulizations,
-# this creates easier columns/rows to filter for viz and easier to
-# left/right/full join
+wa_state_df[, 2] <- as.numeric(gsub(",", "", wa_state_df[, 2]))
+wa_state_df[, 3] <- as.numeric(gsub(",", "", wa_state_df[, 3]))
+wa_state_df[, 4] <- as.numeric(gsub(",", "", wa_state_df[, 4]))
+wa_state_df[, 5] <- as.numeric(gsub(",", "", wa_state_df[, 5]))
+wa_state_df[, 6] <- as.numeric(gsub(",", "", wa_state_df[, 6]))
+wa_state_df[, 7] <- as.numeric(gsub(",", "", wa_state_df[, 7]))
+wa_state_df[, 9] <- as.numeric(gsub(",", "", wa_state_df[, 9]))
 
-# --------All population who voted ----------- all these should work---
+test <- wa_state_df %>%
+  arrange(desc(legislative_dist))
 
-
-# -------- DF3 Sorting for Pie Chart -----------
+# Proportion of voters by age------------------------------------
+# constructing a pie chart that depicts the proportion of voters by age in 
+# the state of Washington 
 
 remove_rows <- df_three[-c(1, 2), ]
 remove_column <- remove_rows[, -8]
